@@ -1,0 +1,48 @@
+{% load static %}
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>{% block title %}My shop{% endblock %}</title>
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div id="header " style="background-color: #90EE90;">
+            <a href="/" class="display-4 text-decoration-none" class="logo">Fresh!ly</a>
+        </div>
+        <div id="subheader" style="background-color: coral;">
+        <div class="cart">
+            {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                    Your cart:
+                    <a href="{% url 'cart:cart_detail' %}" class="btn-link text-decoration-none btn-warning btn ">
+                    {{ total_items }} item{{ total_items|pluralize }},
+                    ${{ cart.get_total_price }}
+                    </a>
+                {% else %}
+                    Your cart is empty.
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="messages pt-2 mt-2 mb-2">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
